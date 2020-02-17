@@ -1,4 +1,5 @@
 <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js" integrity="sha256-0YPKAwZP7Mp3ALMRVB2i8GXeEndvCq3eSl/WsAl1Ryk=" crossorigin="anonymous"></script>
+<!-- <script src="<?= base_url('assets/plugins/jquery-ui/jquery-ui.mn.js') ?>"></script> -->
 <?php
 function rupiah($angka)
 {
@@ -14,7 +15,7 @@ function rupiah($angka)
                 <h3 class="card-title">Simpanan</h3>
             </div> <!-- /.card-body -->
             <div class="card-body">
-                <form action="" method="post">
+                <form action="<?= site_url('petugas/simpan') ?>" method="post">
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-4">
@@ -77,6 +78,7 @@ function rupiah($angka)
                                         <th>Tanggal Simpan</th>
                                         <th>Besar Simpanan</th>
                                         <th>Ket</th>
+                                        <th>Cetak</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -87,9 +89,10 @@ function rupiah($angka)
                                             <td><?= $row->nik ?></td>
                                             <td><?= $row->nama ?></td>
                                             <td><?= $row->petugas ?></td>
-                                            <td><?= $row->tanggal_simpanan ?></td>
+                                            <td><?= date('d-M-Y', strtotime($row->tanggal_simpanan)) ?></td>
                                             <td><?= rupiah($row->besar_simpanan) ?></td>
                                             <td><?= $row->ket ?></td>
+                                            <td><a href="<?= site_url('petugas/simpan_pdf/') . $row->id_simpanan ?>" target="_BLANK" class="btn btn-info"><i class="fas fa-print"></i></a></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>

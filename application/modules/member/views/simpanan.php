@@ -35,7 +35,7 @@ function rupiah($angka)
                                     foreach ($member as $row) : ?>
                                         <tr>
                                             <td><?= $row->tanggal_simpanan ?></td>
-                                            <td><?= $row->username ?></td>
+                                            <td><?= $row->petugas ?></td>
                                             <td><?= rupiah($row->besar_simpanan) ?></td>
                                             <td><?= rupiah($row->besar_simpanan) ?></td>
                                             <td><?= $row->ket ?></td>

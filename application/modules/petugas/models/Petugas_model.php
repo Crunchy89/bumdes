@@ -33,4 +33,16 @@ class Petugas_model extends CI_Model
 
 		return $response;
 	}
+	public function simpan()
+	{
+		$post = $this->input->post();
+		$data = [
+			'id_anggota' => $post['id'],
+			'petugas' => $this->session->userdata('username'),
+			'besar_simpanan' => $post['simpanan'],
+			'ket' => htmlspecialchars($post['ket'])
+		];
+		$this->db->insert('simpanan', $data);
+		redirect('petugas');
+	}
 }

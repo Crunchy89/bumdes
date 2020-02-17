@@ -27,7 +27,7 @@
                     <tr>
                         <td><?= $no; ?></td>
                         <td><?= $user->nama ?></td>
-                        <td><?= $user->username ?></td>
+                        <td><?= $user->petugas ?></td>
                         <td><?= $user->tanggal_simpanan ?></td>
                         <td><?= $user->besar_simpanan ?></td>
                         <td><?= $user->ket ?></td>

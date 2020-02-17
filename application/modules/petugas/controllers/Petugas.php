@@ -28,4 +28,16 @@ class Petugas extends MY_Controller
 
 		echo json_encode($data);
 	}
+	public function simpan()
+	{
+		$this->model->simpan();
+	}
+	public function simpan_pdf($id)
+	{
+		$data['data'] = $this->db->query("SELECT simpanan.*,anggota.* FROM simpanan INNER JOIN anggota on simpanan.id_anggota = anggota.id_anggota where simpanan.id_simpanan = $id")->row();
+		// $html = 
+		$this->load->view('simpan_pdf', $data);
+		// $filename = 'Struk_simpan';
+		// $this->pdf->generate($html, $filename, true, 'A4', 'landscape');
+	}
 }

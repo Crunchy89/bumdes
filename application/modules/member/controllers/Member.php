@@ -37,7 +37,7 @@ class Member extends MY_Controller
 		$data = [
 			'title' => 'Halaman Anggota',
 			'page' => 'Simpanan',
-			'member' => $this->db->query("SELECT simpanan.*,user.* FROM simpanan INNER JOIN user on simpanan.id_petugas=user.id_user")->result()
+			'member' => $this->db->query("SELECT * FROM simpanan Where id_anggota = $id")->result()
 		];
 		admin_page('simpanan', $data);
 	}
@@ -47,7 +47,7 @@ class Member extends MY_Controller
 		$data = [
 			'title' => 'Halaman Anggota',
 			'page' => 'Angsuran',
-			'member' => $this->db->query("SELECT angsuran.*,user.* FROM angsuran INNER JOIN user on angsuran.id_petugas=user.id_user")->result()
+			'member' => $this->db->query("SELECT angsuran.*,pinjaman.*,anggota.* FROM angsuran INNER JOIN pinjaman on angsuran.id_pinjaman = pinjaman.id_pinjaman INNER JOIN anggota on pinjaman.id_anggota=anggota.id_anggota")->result()
 		];
 		admin_page('angsuran', $data);
 	}

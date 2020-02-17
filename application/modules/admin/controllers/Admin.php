@@ -88,13 +88,13 @@ class Admin extends MY_Controller
 		$data = [
 			'title' => 'Halaman Ketua',
 			'page' => 'Laporan Simpanan',
-			'data' => $this->db->query("SELECT simpanan.*,anggota.*,user.* FROM simpanan INNER JOIN anggota on simpanan.id_anggota=anggota.id_anggota INNER JOIN user on simpanan.id_petugas=user.id_user")->result()
+			'data' => $this->db->query("SELECT simpanan.*,anggota.* FROM simpanan INNER JOIN anggota on simpanan.id_anggota=anggota.id_anggota")->result()
 		];
 		admin_page('simpanan', $data);
 	}
 	public function simpanan_pdf()
 	{
-		$data['users'] = $this->db->query("SELECT simpanan.*,anggota.*,user.* FROM simpanan INNER JOIN anggota on simpanan.id_anggota=anggota.id_anggota INNER JOIN user on simpanan.id_petugas=user.id_user")->result();
+		$data['users'] = $this->db->query("SELECT simpanan.*,anggota.* FROM simpanan INNER JOIN anggota on simpanan.id_anggota=anggota.id_anggota")->result();
 		$html = $this->load->view('simpanan_pdf', $data, true);
 		$filename = 'Simpanan';
 		$this->pdf->generate($html, $filename, true, 'A4', 'landscape');
