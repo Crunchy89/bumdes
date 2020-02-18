@@ -3,7 +3,11 @@ class Petugas_model extends CI_Model
 {
 	public function join()
 	{
-		return $this->db->query("SELECT simpanan.*,anggota.*,penarikan.*,anggota.id_anggota as id FROM simpanan INNER JOIN anggota on simpanan.id_anggota = anggota.id_anggota LEFT JOIN penarikan on simpanan.id_simpanan = penarikan.id_simpanan GROUP BY simpanan.id_anggota order by simpanan.id_simpanan DESC")->result();
+		return $this->db->query("SELECT simpanan.*,anggota.*,penarikan.*,penarikan.id_anggota as id,simpanan.petugas as siapa FROM simpanan INNER JOIN anggota on simpanan.id_anggota = anggota.id_anggota LEFT JOIN penarikan on simpanan.id_anggota = penarikan.id_anggota GROUP BY simpanan.id_anggota order by simpanan.id_simpanan DESC")->result();
+	}
+	public function join_tarik()
+	{
+		return $this->db->query("SELECT simpanan.*,anggota.*,penarikan.*,anggota.id_anggota as id,simpanan.petugas as siapa FROM simpanan INNER JOIN anggota on simpanan.id_anggota = anggota.id_anggota INNER JOIN penarikan on simpanan.id_anggota = penarikan.id_anggota GROUP BY penarikan.id_anggota order by penarikan.id_penarikan DESC")->result();
 	}
 	public function join_pinjaman()
 	{
@@ -75,6 +79,40 @@ class Petugas_model extends CI_Model
 
 		return $response;
 	}
+	function getTarik($postData)
+	{
+
+		$response = array();
+
+		if (isset($postData['search'])) {
+			// Select record
+			$cari = $postData['search'];
+			$records = $this->db->query("SELECT anggota.*,simpanan.*, simpanan.id_anggota as anggota,penarikan.* FROM anggota INNER JOIN simpanan on anggota.id_anggota = simpanan.id_anggota LEFT JOIN penarikan on anggota.id_anggota = penarikan.id_anggota WHERE anggota.nik LIKE '%$cari%' Group by anggota.nik order by simpanan.id_simpanan desc")->result();
+
+			foreach ($records as $row) {
+				$data = $this->db->get_where('simpanan', ['id_anggota' => $row->anggota])->result();
+				$tarik = $this->db->get_where('penarikan', ['id_anggota' => $row->anggota])->result();
+				$total = 0;
+				$saldo = 0;
+				foreach ($data as $sum) {
+					$total += $sum->besar_simpanan;
+				}
+				foreach ($tarik as $sum) {
+					$saldo += $sum->besar_penarikan;
+				}
+				$hasil = $total - (int) $saldo;
+				$response[] = array(
+					"noHp" =>  $row->no_hp,
+					"saldo" => (string) $hasil,
+					"id" => $row->anggota,
+					"nama" => $row->nama,
+					"label" => $row->nik
+				);
+			}
+		}
+
+		return $response;
+	}
 	public function simpan()
 	{
 		$post = $this->input->post();
@@ -129,5 +167,17 @@ class Petugas_model extends CI_Model
 		];
 		$this->db->insert('angsuran', $data);
 		redirect('petugas/angsuran');
+	}
+	public function tarik()
+	{
+		$post = $this->input->post();
+		$data = [
+			'id_anggota' => $post['id'],
+			'petugas' => $this->session->userdata('username'),
+			'besar_penarikan' => $post['simpanan'],
+			'ket' => $post['ket']
+		];
+		$this->db->insert('penarikan', $data);
+		redirect('petugas/penarikan');
 	}
 }

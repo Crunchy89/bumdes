@@ -12,56 +12,61 @@ function rupiah($angka)
     <div class="container-fluid">
         <div class="card card-primary card-outline">
             <div class="card-header">
-                <h3 class="card-title">Simpanan</h3>
+                <h3 class="card-title">Penarikan</h3>
             </div> <!-- /.card-body -->
             <div class="card-body">
-                <form action="<?= site_url('petugas/simpan') ?>" method="post">
+                <form action="<?= site_url('petugas/tarik') ?>" method="post">
                     <div class="col-md-12">
                         <div class="row">
-                            <div class="col-4">
-                                <div class="form-group">
-                                    <Label for="nik">NIK</Label>
-                                    <input type="hidden" name="id" id="id">
-                                    <input type="text" name="nik" id="nik" placeholder="NIK" class="form-control form-control-sm">
+                            <div class="col-6">
+                                <div class="form-group row">
+                                    <Label class="col-4" for="nik">NIK</Label>
+                                    <div class="col-8">
+                                        <input type="hidden" name="id" id="id">
+                                        <input type="text" name="nik" id="nik" placeholder="NIK" class="form-control form-control-sm">
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <Label for="nama">Nama</Label>
-                                    <input type="text" name="nama" id="nama" placeholder="Nama Anggota" class="autocomplete form-control form-control-sm" disabled>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="form-group">
-                                    <Label for="jk">JK</Label>
-                                    <input type="text" name="jk" id="jk" placeholder="Jenis Kelamin" class="autocomplete form-control form-control-sm" disabled>
-                                </div>
-                                <div class="form-group">
-                                    <Label for="noHp">No Hp</Label>
-                                    <input type="text" name="noHp" id="noHp" placeholder="Jenis Kelamin" class="autocomplete form-control form-control-sm" disabled>
+                                <div class="form-group row">
+                                    <Label class="col-4" for="nama">Nama</Label>
+                                    <div class="col-8">
+                                        <input type="text" name="nama" id="nama" placeholder="Nama Anggota" class="autocomplete form-control form-control-sm" disabled>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-4">
-                                <div class="form-group">
-                                    <Label for="alamat">Alamat</Label>
-                                    <textarea name="alamat" id="alamat" cols="30" rows="4" class="form-control" disabled></textarea>
+                            <div class="col-6">
+                                <div class="form-group row">
+                                    <Label class="col-4" for="saldo">Saldo</Label>
+                                    <div class="col-8">
+                                        <input type="text" name="saldo" id="saldo" placeholder="Saldo" class="autocomplete form-control form-control-sm" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <Label for="noHp" class="col-4">No Hp</Label>
+                                    <div class="col-8">
+                                        <input type="text" name="noHp" id="noHp" placeholder="No Handphone" class="autocomplete form-control form-control-sm" disabled>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-4">
                                 <div class="form-group">
-                                    <label for="jumlah">Jumlah Simpan</label>
+                                    <label for="jumlah">Jumlah Penarikan</label>
                                     <input type="text" name="jumlah" id="jumlah" class="form-control form-control-sm">
                                     <input type="hidden" id="simpanan" name="simpanan">
                                 </div>
                             </div>
                             <div class="col-4">
-                                <label for="Petugas">Petugas</label>
-                                <input type="hidden" name="id_petugas" id="id_petugas" value="<?= $this->session->userdata('id') ?>">
-                                <input type="text" disabled class="form-control form-control-sm" value="<?= $this->session->userdata('username') ?>">
+                                <div class="form-group">
+                                    <label for="Petugas">Petugas</label>
+                                    <input type="text" disabled class="form-control form-control-sm" value="<?= $this->session->userdata('username') ?>">
+                                </div>
                             </div>
                             <div class="col-4">
-                                <label for="ket">Keterangan</label>
-                                <input type="text" class="form-control form-control-sm" name="ket" id="ket">
+                                <div class="form-group row">
+                                    <label for="ket">Keterangan</label>
+                                    <input type="text" class="form-control form-control-sm" name="ket" id="ket">
+                                </div>
                             </div>
                         </div>
                         <div class="col-12 mb-3">
@@ -75,9 +80,7 @@ function rupiah($angka)
                                         <th>No</th>
                                         <th>NIK</th>
                                         <th>Nama</th>
-                                        <th>Petugas</th>
-                                        <th>Tanggal Simpan</th>
-                                        <th>Total Transaksi</th>
+                                        <th>Tanggal Tarik</th>
                                         <th>Total Penarikan</th>
                                         <th>Saldo</th>
                                         <th>Ket</th>
@@ -91,8 +94,7 @@ function rupiah($angka)
                                             <td><?= $i++ ?></td>
                                             <td><?= $row->nik ?></td>
                                             <td><?= $row->nama ?></td>
-                                            <td><?= $row->siapa ?></td>
-                                            <td><?= date('d-M-Y', strtotime($row->tanggal_simpanan)) ?></td>
+                                            <td><?= date('d-M-Y', strtotime($row->tanggal_penarikan)) ?></td>
                                             <?php $data = $this->db->get_where('simpanan', ['id_anggota' => $row->id])->result();
                                             $tarik = $this->db->get_where('penarikan', ['id_anggota' => $row->id])->result();
                                             $total = 0;
@@ -104,11 +106,10 @@ function rupiah($angka)
                                                 $saldo += $sum->besar_penarikan;
                                             }
                                             $hasil = $total - (int) $saldo; ?>
-                                            <td><?= rupiah($total) ?></td>
                                             <td><?= rupiah($saldo) ?></td>
                                             <td><?= rupiah($hasil) ?></td>
                                             <td class="text-center"><?= $row->ket ?></td>
-                                            <td><a href="<?= site_url('petugas/simpan_pdf/') . $row->id ?>" target="_BLANK" class="btn btn-info"><i class="fas fa-print"></i></a></td>
+                                            <td><a href="<?= site_url('petugas/tarik_pdf/') . $row->id ?>" target="_BLANK" class="btn btn-info"><i class="fas fa-print"></i></a></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -158,7 +159,7 @@ function rupiah($angka)
             source: function(request, response) {
                 // Fetch data
                 $.ajax({
-                    url: "<?= site_url('petugas/userList') ?>",
+                    url: "<?= site_url('petugas/userTarik') ?>",
                     type: 'post',
                     dataType: "json",
                     data: {
@@ -172,16 +173,10 @@ function rupiah($angka)
             select: function(event, ui) {
                 // Set selection
                 $('#nik').val(ui.item.label); // display the selected text
-                if (ui.item.jk == 'L') {
-                    $('#jk').val("Laki - Laki"); // save selected id to input
-                } else {
-                    $('#jk').val("Perempuan"); // save selected id to input
-                }
                 $('#nama').val(ui.item.nama); // save selected id to input
                 $('#id').val(ui.item.id); // save selected id to input
                 $('#noHp').val(ui.item.noHp); // save selected id to input
-                $('#alamat').val(ui.item.alamat); // save selected id to input
-                $('#tempat').val(ui.item.tempat + ', ' + ui.item.lahir); // save selected id to input
+                $('#saldo').val(formatRupiah(ui.item.saldo, 'Rp. ')); // save selected id to input
                 return false;
             }
         });

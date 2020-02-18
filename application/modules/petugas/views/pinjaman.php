@@ -15,7 +15,7 @@ function rupiah($angka)
     <div class="container-fluid">
         <div class="card card-primary card-outline">
             <div class="card-header">
-                <h3 class="card-title">Simpanan</h3>
+                <h3 class="card-title">Pinjaman</h3>
             </div> <!-- /.card-body -->
             <div class="card-body">
                 <form action="<?= site_url('petugas/pinjam_simpan') ?>" method="post">
