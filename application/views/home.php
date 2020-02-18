@@ -167,13 +167,13 @@
                                                             <div class="col-6">
                                                                 <div class="form-group">
                                                                     <label for="user">Username</label>
-                                                                    <input type="password" name="user" id="user" class="form-control" placeholder="Username" required>
+                                                                    <input type="text" name="user" id="user" class="form-control" placeholder="Username" required>
                                                                 </div>
                                                             </div>
                                                             <div class="col-6">
                                                                 <div class="form-group">
                                                                     <label for="pass">Password</label>
-                                                                    <input type="text" name="pass" id="pass" class="form-control" placeholder="Username" required>
+                                                                    <input type="password" name="pass" id="pass" class="form-control" placeholder="Username" required>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -229,3 +229,9 @@
 </body>
 
 </html>
+<script>
+    var loadFile = function(event) {
+        var output = document.getElementById('output');
+        output.src = URL.createObjectURL(event.target.files[0]);
+    };
+</script>
