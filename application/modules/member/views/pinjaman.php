@@ -36,6 +36,7 @@ function rupiah($angka)
                                     <?php $no = 1;
                                     foreach ($member as $row) : ?>
                                         <tr>
+                                            <td><?= $no++ ?></td>
                                             <td><?= rupiah($row->besar_pinjaman) ?></td>
                                             <td>10 Bulan</td>
                                             <td><?= date('d-M-Y', strtotime($row->tgl_pinjaman)) ?></td>

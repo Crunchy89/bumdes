@@ -5,12 +5,6 @@ class Member extends MY_Controller
 {
 	public function __construct()
 	{
-		if ($this->session->userdata('level') == 4) {
-			redirect('petugas');
-		}
-		if ($this->session->userdata('level') == 2) {
-			redirect('admin');
-		}
 		parent::__construct();
 	}
 
@@ -44,13 +38,23 @@ class Member extends MY_Controller
 		];
 		admin_page('simpanan', $data);
 	}
+	public function penarikan()
+	{
+		$id = $this->session->userdata('id');
+		$data = [
+			'title' => 'Halaman Anggota',
+			'page' => 'Penarikan',
+			'member' => $this->db->query("SELECT anggota.*,penarikan.* FROM anggota INNER JOIN penarikan on anggota.id_anggota = penarikan.id_anggota  Where penarikan.id_anggota = $id")->result()
+		];
+		admin_page('penarikan', $data);
+	}
 	public function angsuran()
 	{
 		$id = $this->session->userdata('id');
 		$data = [
 			'title' => 'Halaman Anggota',
 			'page' => 'Angsuran',
-			'member' => $this->db->query("SELECT angsuran.*,pinjaman.*,anggota.* FROM angsuran INNER JOIN pinjaman on angsuran.id_pinjaman = pinjaman.id_pinjaman INNER JOIN anggota on pinjaman.id_anggota=anggota.id_anggota")->result()
+			'member' => $this->db->query("SELECT angsuran.*,pinjaman.*,anggota.* FROM angsuran INNER JOIN pinjaman on angsuran.id_pinjaman = pinjaman.id_pinjaman INNER JOIN anggota on pinjaman.id_anggota=anggota.id_anggota WHERE pinjaman.id_anggota = $id")->result()
 		];
 		admin_page('angsuran', $data);
 	}

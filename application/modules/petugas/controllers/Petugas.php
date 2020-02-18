@@ -107,4 +107,24 @@ class Petugas extends MY_Controller
 		$data['data'] = $this->db->query("SELECT anggota.*,penarikan.* FROM anggota INNER JOIN penarikan on anggota.id_anggota = penarikan.id_anggota where penarikan.id_anggota =$id ORDER BY penarikan.id_anggota asc")->result();
 		$this->load->view('tarik_pdf', $data);
 	}
+	public function simpan_bulan()
+	{
+		$data['data'] = $this->db->query("SELECT anggota.*,simpanan.* FROM anggota INNER JOIN simpanan on anggota.id_anggota = simpanan.id_anggota WHERE YEAR(simpanan.tanggal_simpanan) = YEAR(NOW()) AND MONTH(simpanan.tanggal_simpanan)=MONTH(NOW())  ORDER BY simpanan.id_simpanan asc")->result();
+		$this->load->view('simpan_bulan', $data);
+	}
+	public function tarik_bulan()
+	{
+		$data['data'] = $this->db->query("SELECT anggota.*,penarikan.* FROM anggota INNER JOIN penarikan on anggota.id_anggota = penarikan.id_anggota WHERE YEAR(penarikan.tanggal_penarikan) = YEAR(NOW()) AND MONTH(penarikan.tanggal_penarikan)=MONTH(NOW())  ORDER BY penarikan.id_penarikan asc")->result();
+		$this->load->view('tarik_bulan', $data);
+	}
+	public function pinjam_bulan()
+	{
+		$data['data'] = $this->db->query("SELECT anggota.*,pinjaman.* FROM anggota INNER JOIN pinjaman on anggota.id_anggota = pinjaman.id_anggota WHERE YEAR(pinjaman.tgl_pinjaman) = YEAR(NOW()) AND MONTH(pinjaman.tgl_pinjaman)=MONTH(NOW())  ORDER BY pinjaman.id_pinjaman asc")->result();
+		$this->load->view('pinjam_bulan', $data);
+	}
+	public function angsur_bulan()
+	{
+		$data['data'] = $this->db->query("SELECT anggota.*,pinjaman.*,angsuran.* FROM anggota INNER JOIN pinjaman on anggota.id_anggota = pinjaman.id_anggota INNER JOIN angsuran on pinjaman.id_pinjaman = angsuran.id_pinjaman WHERE YEAR(angsuran.tgl_setor) = YEAR(NOW()) AND MONTH(angsuran.tgl_setor)=MONTH(NOW())  ORDER BY angsuran.id_angsuran asc")->result();
+		$this->load->view('angsur_bulan', $data);
+	}
 }

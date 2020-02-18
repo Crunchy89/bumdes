@@ -1,3 +1,11 @@
+<?php
+function rupiah($angka)
+{
+
+    $hasil_rupiah = "Rp " . number_format($angka, 0, ',', '.');
+    return $hasil_rupiah;
+}
+?>
 <!DOCTYPE html>
 <html>
 
@@ -28,8 +36,8 @@
                         <td><?= $no; ?></td>
                         <td><?= $user->nama ?></td>
                         <td><?= $user->petugas ?></td>
-                        <td><?= $user->tanggal_simpanan ?></td>
-                        <td><?= $user->besar_simpanan ?></td>
+                        <td><?= date('d-M-Y', strtotime($user->tanggal_simpanan)) ?></td>
+                        <td><?= rupiah($user->besar_simpanan) ?></td>
                         <td><?= $user->ket ?></td>
                     </tr>
                     <?php $no++; ?>
@@ -38,5 +46,8 @@
         </table>
     </div>
 </body>
+<script>
+    window.print();
+</script>
 
 </html>

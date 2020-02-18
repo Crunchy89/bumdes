@@ -102,6 +102,18 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a href="<?= site_url('member/simpanan') ?>" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Simpanan</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?= site_url('member/penarikan') ?>" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Penarikan</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="<?= site_url('member/pinjaman') ?>" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Pinjaman</p>
@@ -111,12 +123,6 @@
                                 <a href="<?= site_url('member/angsuran') ?>" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Angsuran</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="<?= site_url('member/simpanan') ?>" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Simpanan</p>
                                 </a>
                             </li>
                         <?php endif; ?>
@@ -143,6 +149,12 @@
                                 <a href="<?= site_url('admin/simpanan') ?>" class="nav-link">
                                     <i class="fas fa-cog nav-icon"></i>
                                     <p>Simpanan</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?= site_url('admin/penarikan') ?>" class="nav-link">
+                                    <i class="fas fa-cog nav-icon"></i>
+                                    <p>Penarikan</p>
                                 </a>
                             </li>
                             <li class="nav-item">

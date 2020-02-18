@@ -33,8 +33,8 @@ function rupiah($angka)
                                         <th>Tanggal Setor</th>
                                         <th>Nama Anggota</th>
                                         <th>Petugas</th>
+                                        <th>Besar Angsuran</th>
                                         <th>Angsuran ke</th>
-                                        <th>Sisa Angsuran</th>
                                         <th>ket</th>
                                     </tr>
                                 </thead>
@@ -42,11 +42,12 @@ function rupiah($angka)
                                     <?php $no = 1;
                                     foreach ($data as $row) : ?>
                                         <tr>
-                                            <td><?= date('d - M - Y', $row->tgl_setor) ?></td>
+                                            <td><?= $no++ ?></td>
+                                            <td><?= date('d - M - Y', strtotime($row->tgl_setor)) ?></td>
                                             <td><?= $row->nama ?></td>
-                                            <td><?= $row->username ?></td>
+                                            <td><?= $row->petugas ?></td>
+                                            <td><?= rupiah($row->besar_angsuran) ?></td>
                                             <td><?= $row->angsuran_ke ?></td>
-                                            <td><?= rupiah($row->sisa_angsuran) ?></td>
                                             <td><?= $row->ket ?></td>
 
                                         </tr>

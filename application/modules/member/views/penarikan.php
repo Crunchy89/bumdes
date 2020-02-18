@@ -14,7 +14,7 @@ function rupiah($angka)
                     <div class="card-header">
                         <h3 class="card-title">
                             <i class="fas fa-edit"></i>
-                            Data Angsuran
+                            Data Penarikan
                         </h3>
                     </div>
                     <div class="card-body pad table-responsive">
@@ -23,11 +23,10 @@ function rupiah($angka)
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Tanggal Setor</th>
+                                        <th>Tanggal Penarikan</th>
                                         <th>Petugas</th>
-                                        <th>Angsuran ke</th>
-                                        <th>Sisa Angsuran</th>
-                                        <th>ket</th>
+                                        <th>Besar Penarikan</th>
+                                        <th>Ket</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -35,12 +34,10 @@ function rupiah($angka)
                                     foreach ($member as $row) : ?>
                                         <tr>
                                             <td><?= $no++ ?></td>
-                                            <td><?= date('d - M - Y', strtotime($row->tgl_setor)) ?></td>
+                                            <td><?= date('d-M-Y', strtotime($row->tanggal_penarikan)) ?></td>
                                             <td><?= $row->petugas ?></td>
-                                            <td><?= $row->angsuran_ke ?></td>
-                                            <td><?= rupiah($row->besar_angsuran) ?></td>
+                                            <td><?= rupiah($row->besar_penarikan) ?></td>
                                             <td><?= $row->ket ?></td>
-
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>

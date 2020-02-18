@@ -64,6 +64,7 @@ function rupiah($angka)
                             </div>
                         </div>
                         <div class="col-12 mb-3">
+                            <a href="<?= site_url('petugas/pinjam_bulan') ?>" target="_BLANK" class="btn btn-info">Cetak Laporan Bulanan</a>
                             <button type="submit" class="btn btn-primary float-right">Simpan</button>
                         </div>
                         <div class="table-responsive mt-5">

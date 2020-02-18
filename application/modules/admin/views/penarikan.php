@@ -14,33 +14,43 @@ function rupiah($angka)
                     <div class="card-header">
                         <h3 class="card-title">
                             <i class="fas fa-edit"></i>
-                            Data Angsuran
+                            Data Simpanan
+                            <hr>
+                            <div class="btn-group">
+                                <div class="btn btn-info active">
+                                    <span><i class="fa fa-print"></i></span>
+                                </div>
+                                <a href="<?= site_url('admin/penarikan_pdf') ?>" target="_BLANK" type="button" class="btn btn-info">PDF</a>
+                            </div>
                         </h3>
                     </div>
+
+
+
                     <div class="card-body pad table-responsive">
                         <div class="table-responsive">
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Tanggal Setor</th>
+                                        <th>Anggota</th>
                                         <th>Petugas</th>
-                                        <th>Angsuran ke</th>
-                                        <th>Sisa Angsuran</th>
-                                        <th>ket</th>
+                                        <th>Tanggal Tarik</th>
+                                        <th>Besar Penarikan</th>
+                                        <th>Ket</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php $no = 1;
-                                    foreach ($member as $row) : ?>
+                                    foreach ($data as $row) : ?>
                                         <tr>
                                             <td><?= $no++ ?></td>
-                                            <td><?= date('d - M - Y', strtotime($row->tgl_setor)) ?></td>
+                                            <td><?= $row->nama ?></td>
                                             <td><?= $row->petugas ?></td>
-                                            <td><?= $row->angsuran_ke ?></td>
-                                            <td><?= rupiah($row->besar_angsuran) ?></td>
+                                            <td><?= date('d - M - Y', strtotime($row->tanggal_penarikan)) ?></td>
+                                            <td><?= rupiah($row->besar_penarikan) ?></td>
                                             <td><?= $row->ket ?></td>
-
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>

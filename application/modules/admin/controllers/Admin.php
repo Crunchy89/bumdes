@@ -47,9 +47,10 @@ class Admin extends MY_Controller
 	public function anggota_pdf()
 	{
 		$data['users'] = $this->db->get('anggota')->result();
-		$html = $this->load->view('anggota_pdf', $data, true);
-		$filename = 'Anggota';
-		$this->pdf->generate($html, $filename, true, 'A4', 'landscape');
+		$this->load->view('anggota_pdf', $data);
+		// $html = 
+		// $filename = 'Anggota';
+		// $this->pdf->generate($html, $filename, true, 'A4', 'landscape');
 	}
 	public function pegawai()
 	{
@@ -98,43 +99,63 @@ class Admin extends MY_Controller
 		];
 		admin_page('simpanan', $data);
 	}
+	public function penarikan()
+	{
+		$data = [
+			'title' => 'Halaman Ketua',
+			'page' => 'Laporan Penarikan',
+			'data' => $this->db->query("SELECT simpanan.*,anggota.*,penarikan.* FROM simpanan INNER JOIN anggota on simpanan.id_anggota=anggota.id_anggota INNER JOIN penarikan on anggota.id_anggota = penarikan.id_anggota GROUP BY penarikan.id_penarikan")->result()
+		];
+		admin_page('penarikan', $data);
+	}
+	public function penarikan_pdf()
+	{
+		$data['users'] = $this->db->query("SELECT simpanan.*,anggota.*,penarikan.* FROM simpanan INNER JOIN anggota on simpanan.id_anggota=anggota.id_anggota INNER JOIN penarikan on anggota.id_anggota=penarikan.id_anggota GROUP BY penarikan.id_penarikan ORDER BY penarikan.id_penarikan ASC")->result();
+		$this->load->view('penarikan_pdf', $data);
+		// $html = 
+		// $filename = 'Simpanan';
+		// $this->pdf->generate($html, $filename, true, 'A4', 'landscape');
+	}
 	public function simpanan_pdf()
 	{
 		$data['users'] = $this->db->query("SELECT simpanan.*,anggota.* FROM simpanan INNER JOIN anggota on simpanan.id_anggota=anggota.id_anggota")->result();
-		$html = $this->load->view('simpanan_pdf', $data, true);
-		$filename = 'Simpanan';
-		$this->pdf->generate($html, $filename, true, 'A4', 'landscape');
+		$this->load->view('simpanan_pdf', $data);
+		// $html = 
+		// $filename = 'Simpanan';
+		// $this->pdf->generate($html, $filename, true, 'A4', 'landscape');
 	}
 	public function pinjaman()
 	{
 		$data = [
 			'title' => 'Halaman Ketua',
 			'page' => 'Laporan Pinjaman',
-			'data' => $this->db->query("SELECT pinjaman.*,anggota.*,user.* FROM pinjaman INNER JOIN anggota on pinjaman.id_anggota=anggota.id_anggota INNER JOIN user on pinjaman.id_petugas=user.id_user")->result()
+			'data' => $this->db->query("SELECT pinjaman.*,anggota.* FROM pinjaman INNER JOIN anggota on pinjaman.id_anggota=anggota.id_anggota")->result()
 		];
 		admin_page('pinjaman', $data);
 	}
 	public function pinjaman_pdf()
 	{
-		$data['data'] = $this->db->query("SELECT pinjaman.*,anggota.*,user.* FROM pinjaman INNER JOIN anggota on pinjaman.id_anggota=anggota.id_anggota INNER JOIN user on pinjaman.id_petugas=user.id_user")->result();
-		$html = $this->load->view('pinjaman_pdf', $data, true);
-		$filename = 'Pinjaman';
-		$this->pdf->generate($html, $filename, true, 'A4', 'landscape');
+		$data['data'] = $this->db->query("SELECT pinjaman.*,anggota.* FROM pinjaman INNER JOIN anggota on pinjaman.id_anggota=anggota.id_anggota")->result();
+		$this->load->view('pinjaman_pdf', $data);
+		// $html = 
+		// $filename = 'Pinjaman';
+		// $this->pdf->generate($html, $filename, true, 'A4', 'landscape');
 	}
 	public function angsuran()
 	{
 		$data = [
 			'title' => 'Halaman Ketua',
 			'page' => 'Laporan Angsuran',
-			'data' => $this->db->query("SELECT angsuran.*,pinjaman.*,anggota.*,user.* FROM angsuran INNER JOIN pinjaman on angsuran.id_pinjaman=pinjaman.id_pinjaman INNER JOIN anggota on pinjaman.id_anggota=anggota.id_anggota INNER JOIN user on pinjaman.id_petugas=user.id_user")->result()
+			'data' => $this->db->query("SELECT angsuran.*,pinjaman.*,anggota.* FROM angsuran INNER JOIN pinjaman on angsuran.id_pinjaman=pinjaman.id_pinjaman INNER JOIN anggota on pinjaman.id_anggota=anggota.id_anggota")->result()
 		];
 		admin_page('angsuran', $data);
 	}
 	public function angsuran_pdf()
 	{
-		$data['data'] = $this->db->query("SELECT angsuran.*,pinjaman.*,anggota.*,user.* FROM angsuran INNER JOIN pinjaman on angsuran.id_pinjaman=pinjaman.id_pinjaman INNER JOIN anggota on pinjaman.id_anggota=anggota.id_anggota INNER JOIN user on pinjaman.id_petugas=user.id_user")->result();
-		$html = $this->load->view('angsuran_pdf', $data, true);
-		$filename = 'Angsuran';
-		$this->pdf->generate($html, $filename, true, 'A4', 'landscape');
+		$data['data'] = $this->db->query("SELECT angsuran.*,pinjaman.*,anggota.* FROM angsuran INNER JOIN pinjaman on angsuran.id_pinjaman=pinjaman.id_pinjaman INNER JOIN anggota on pinjaman.id_anggota=anggota.id_anggota")->result();
+		$this->load->view('angsuran_pdf', $data);
+		// $html = 
+		// $filename = 'Angsuran';
+		// $this->pdf->generate($html, $filename, true, 'A4', 'landscape');
 	}
 }

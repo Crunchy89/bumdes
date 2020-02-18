@@ -26,7 +26,6 @@ function rupiah($angka)
                                         <th>Tanggal Simpan</th>
                                         <th>Petugas</th>
                                         <th>Besar Simpanan</th>
-                                        <th>Total Simpanan</th>
                                         <th>Ket</th>
                                     </tr>
                                 </thead>
@@ -36,7 +35,6 @@ function rupiah($angka)
                                         <tr>
                                             <td><?= $row->tanggal_simpanan ?></td>
                                             <td><?= $row->petugas ?></td>
-                                            <td><?= rupiah($row->besar_simpanan) ?></td>
                                             <td><?= rupiah($row->besar_simpanan) ?></td>
                                             <td><?= $row->ket ?></td>
                                         </tr>
