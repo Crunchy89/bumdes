@@ -8,6 +8,9 @@ function rupiah($angka)
     return $hasil_rupiah;
 }
 ?>
+<div class="container-fluid">
+    <?= $this->session->flashdata('pesan') ?>
+</div>
 <section class="content">
     <div class="container-fluid">
         <div class="card card-primary card-outline">
@@ -15,7 +18,7 @@ function rupiah($angka)
                 <h3 class="card-title">Simpanan</h3>
             </div> <!-- /.card-body -->
             <div class="card-body">
-                <form action="<?= site_url('petugas/simpan') ?>" method="post">
+                <form action="<?= site_url('petugas/pinjam_simpan') ?>" method="post">
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-4">
@@ -47,25 +50,20 @@ function rupiah($angka)
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-4">
-                                <div class="form-group">
-                                    <label for="jumlah">Jumlah Simpan</label>
-                                    <input type="text" name="jumlah" id="jumlah" class="form-control form-control-sm">
-                                    <input type="hidden" id="simpanan" name="simpanan">
-                                </div>
-                            </div>
-                            <div class="col-4">
+                            <div class="col-6">
                                 <label for="Petugas">Petugas</label>
                                 <input type="hidden" name="id_petugas" id="id_petugas" value="<?= $this->session->userdata('id') ?>">
                                 <input type="text" disabled class="form-control form-control-sm" value="<?= $this->session->userdata('username') ?>">
                             </div>
-                            <div class="col-4">
-                                <label for="ket">Keterangan</label>
-                                <input type="text" class="form-control form-control-sm" name="ket" id="ket">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="jumlah">Jumlah Pinjaman</label>
+                                    <input type="text" name="jumlah" id="jumlah" class="form-control form-control-sm">
+                                    <input type="hidden" id="simpanan" name="simpanan">
+                                </div>
                             </div>
                         </div>
                         <div class="col-12 mb-3">
-                            <a href="" class="btn btn-info">Cetak Laporan Bulanan</a>
                             <button type="submit" class="btn btn-primary float-right">Simpan</button>
                         </div>
                         <div class="table-responsive mt-5">
@@ -76,34 +74,30 @@ function rupiah($angka)
                                         <th>NIK</th>
                                         <th>Nama</th>
                                         <th>Petugas</th>
-                                        <th>Tanggal Simpan</th>
-                                        <th>Penarikan</th>
-                                        <th>Saldo</th>
-                                        <th>Ket</th>
+                                        <th>Besar Pinjaman</th>
+                                        <th>Jangka Waktu</th>
+                                        <th>Tanggal Pinjam</th>
+                                        <th>Tanggal Pelunasan</th>
+                                        <th>Bunga</th>
+                                        <th>Total Pinjaman</th>
                                         <th>Cetak</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php $i = 1;
-                                    foreach ($simpan as $row) : ?>
+                                    foreach ($pinjam as $row) : ?>
                                         <tr>
                                             <td><?= $i++ ?></td>
                                             <td><?= $row->nik ?></td>
                                             <td><?= $row->nama ?></td>
                                             <td><?= $row->petugas ?></td>
-                                            <td><?= date('d-M-Y', strtotime($row->tanggal_simpanan)) ?></td>
-                                            <?php $data = $this->db->query("SELECT simpanan.*,anggota.*,penarikan.* FROM simpanan INNER JOIN anggota on simpanan.id_anggota = anggota.id_anggota LEFT JOIN penarikan on simpanan.id_simpanan = penarikan.id_simpanan WHERE simpanan.id_anggota = $row->id")->result();
-                                            $total = 0;
-                                            $saldo = 0;
-                                            foreach ($data as $sum) {
-                                                $total += $sum->besar_simpanan;
-                                                $saldo += $sum->besar_penarikan;
-                                            }
-                                            $total = $total - (int) $saldo; ?>
-                                            <td><?= rupiah($saldo) ?></td>
-                                            <td><?= rupiah($total) ?></td>
-                                            <td class="text-center"><?= $row->ket ?></td>
-                                            <td><a href="<?= site_url('petugas/simpan_pdf/') . $row->id ?>" target="_BLANK" class="btn btn-info"><i class="fas fa-print"></i></a></td>
+                                            <td><?= rupiah($row->besar_pinjaman) ?></td>
+                                            <td>10 Bulan</td>
+                                            <td><?= date('d-M-Y', strtotime($row->tgl_pinjaman)) ?></td>
+                                            <td><?= date('d-M-Y', strtotime($row->tgl_pelunasan)) ?></td>
+                                            <td>1.5 %</td>
+                                            <td><?= rupiah($row->total_pinjaman) ?></td>
+                                            <td><a href="<?= site_url('petugas/pinjaman_pdf/') . $row->id_anggota ?>" target="_BLANK" class="btn btn-info"><i class="fas fa-print"></i></a></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>

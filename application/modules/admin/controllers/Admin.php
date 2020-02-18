@@ -5,7 +5,13 @@ class Admin extends MY_Controller
 {
 	public function __construct()
 	{
-		if ($this->session->userdata('level') != 2 && $this->session->userdata('level') != 1) {
+		if ($this->session->userdata('level') == 4) {
+			redirect('petugas');
+		}
+		if ($this->session->userdata('level') == 3) {
+			redirect('member');
+		}
+		if (!$this->session->userdata('level')) {
 			redirect('home');
 		}
 		parent::__construct();

@@ -5,8 +5,11 @@ class Member extends MY_Controller
 {
 	public function __construct()
 	{
-		if (!$this->session->userdata('level') == 3) {
-			redirect('home');
+		if ($this->session->userdata('level') == 4) {
+			redirect('petugas');
+		}
+		if ($this->session->userdata('level') == 2) {
+			redirect('admin');
 		}
 		parent::__construct();
 	}

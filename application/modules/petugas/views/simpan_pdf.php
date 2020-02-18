@@ -9,7 +9,7 @@
 <body>
     <div class="form-group row mt-2 p-3">
         <div class="col-2">
-            <img src="<?= base_url('assets/img/logo.png') ?>" alt="logo" width="200px">
+            <img src="<?= base_url('assets/img/bumdes.png') ?>" alt="logo" width="200px">
         </div>
         <div class="col-8">
             <div class="form-group">
@@ -23,14 +23,49 @@
         </div>
     </div>
     <hr>
-    <div class="mt-5 p-3">
-        <div class="col-12">
-            <div class="row">
-                <div class="col-4">
-                    <label>Nama</label>
-                </div>
-            </div>
-        </div>
+    <?php
+    function rupiah($angka)
+    {
+
+        $hasil_rupiah = "Rp " . number_format($angka, 0, ',', '.');
+        return $hasil_rupiah;
+    }
+    ?>
+    <div class="table-responsive">
+        <table class="table table-bordered table-sm">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Nama</th>
+                    <th>Petugas</th>
+                    <th>Tanggal Simpan</th>
+                    <th>Besar Simpanan</th>
+                    <th>Ket</th>
+                </tr>
+            </thead>
+            <thead class="thead-secondary">
+                <th colspan="4" class="text-center">Jumlah</th>
+                <?php $total = 0;
+                foreach ($data as $sum) {
+                    $total += $sum->besar_simpanan;
+                } ?>
+                <th class="text-center"><?= rupiah($total) ?></th>
+                <th></th>
+            </thead>
+            <tbody>
+                <?php $i = 1;
+                foreach ($data as $row) : ?>
+                    <tr>
+                        <td><?= $i++ ?></td>
+                        <td><?= $row->nama ?></td>
+                        <td><?= $row->petugas ?></td>
+                        <td><?= date('d-M-Y', strtotime($row->tanggal_simpanan)) ?></td>
+                        <td><?= rupiah($row->besar_simpanan) ?></td>
+                        <td><?= $row->ket ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
     </div>
 </body>
 <script>

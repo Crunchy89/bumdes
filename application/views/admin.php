@@ -168,7 +168,15 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="<?= site_url('petugas') ?>" class="nav-link">
+                                <a href="<?= site_url('petugas/penarikan') ?>" class="nav-link">
+                                    <i class="nav-icon fas fa-cog"></i>
+                                    <p>
+                                        Penarikan
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?= site_url('petugas/pinjaman') ?>" class="nav-link">
                                     <i class="nav-icon fas fa-cog"></i>
                                     <p>
                                         Pinjaman
@@ -176,7 +184,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="<?= site_url('petugas') ?>" class="nav-link">
+                                <a href="<?= site_url('petugas/angsuran') ?>" class="nav-link">
                                     <i class="nav-icon fas fa-cog"></i>
                                     <p>
                                         Angsuran
