@@ -36,7 +36,7 @@ class Petugas extends MY_Controller
 	}
 	public function simpan_pdf($id)
 	{
-		$data['data'] = $this->db->query("SELECT simpanan.*,anggota.*,penarikan.* FROM simpanan INNER JOIN anggota on simpanan.id_anggota = anggota.id_anggota LEFT JOIN penarikan on simpanan.id_anggota = penarikan.id_anggota WHERE simpanan.id_anggota = $id")->result();
+		$data['data'] = $this->db->query("SELECT simpanan.*,anggota.*,penarikan.* FROM simpanan INNER JOIN anggota on simpanan.id_anggota = anggota.id_anggota LEFT JOIN penarikan on simpanan.id_anggota = penarikan.id_anggota WHERE simpanan.id_anggota = $id GROUP BY simpanan.id_simpanan")->result();
 		// $html = 
 		$this->load->view('simpan_pdf', $data);
 		// $filename = 'Struk_simpan';
