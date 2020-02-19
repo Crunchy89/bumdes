@@ -129,7 +129,7 @@ class Petugas_model extends CI_Model
 	{
 		$post = $this->input->post();
 		$id = $post['id'];
-		$tes = $this->db->query("SELECT pinjaman.*,anggota.*,angsuran.* FROM pinjaman INNER JOIN anggota on pinjaman.id_anggota=anggota.id_anggota INNER JOIN angsuran on pinjaman.id_pinjaman=angsuran.id_pinjaman WHERE angsuran.sisa_angsuran = 0 AND pinjaman.id_anggota = $id")->result();
+		$tes = $this->db->query("SELECT pinjaman.*,anggota.*,angsuran.* FROM pinjaman INNER JOIN anggota on pinjaman.id_anggota=anggota.id_anggota INNER JOIN angsuran on pinjaman.id_pinjaman=angsuran.id_pinjaman WHERE  pinjaman.id_anggota = $id GROUP BY pinjaman.id_pinjaman")->result();
 		$cek = $this->db->query("SELECT pinjaman.*,anggota.* FROM pinjaman INNER JOIN anggota on pinjaman.id_anggota=anggota.id_anggota WHERE pinjaman.id_anggota = $id")->result();
 		if (!$cek) {
 			(int) $persen = $post['simpanan'] * 1.5 / 100;
