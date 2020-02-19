@@ -131,6 +131,14 @@ class Petugas_model extends CI_Model
 		$id = $post['id'];
 		$tes = $this->db->query("SELECT pinjaman.*,anggota.*,angsuran.* FROM pinjaman INNER JOIN anggota on pinjaman.id_anggota=anggota.id_anggota INNER JOIN angsuran on pinjaman.id_pinjaman=angsuran.id_pinjaman WHERE  pinjaman.id_anggota = $id GROUP BY pinjaman.id_pinjaman")->result();
 		$cek = $this->db->query("SELECT pinjaman.*,anggota.* FROM pinjaman INNER JOIN anggota on pinjaman.id_anggota=anggota.id_anggota WHERE pinjaman.id_anggota = $id")->result();
+		$pinjam = 0;
+		$angsur = 0;
+		$sisa = 0;
+		foreach ($tes as $row) {
+			$pinjam += $row->besar_pinjaman;
+			$angsur += $row->besar_angsuran;
+			$sisa = $pinjam - $angsur;
+		}
 		if (!$cek) {
 			(int) $persen = $post['simpanan'] * 1.5 / 100;
 			(int) $total = $post['simpanan'] + $persen;
@@ -147,7 +155,7 @@ class Petugas_model extends CI_Model
 			];
 			$this->db->insert('pinjaman', $data);
 			redirect('petugas/pinjaman');
-		} else if (!$tes) {
+		} else if ($sisa != 0) {
 			$this->session->set_flashdata('pesan', '<div class="alert alert-danger text-center" role="alert">
 			Anggota Belum menyelesaikan pinjaman sebelumnya
 		  </div>');
